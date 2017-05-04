@@ -1,27 +1,37 @@
-#include <iostream>
-#include <fstream>
-#include <list>
+#include "node.h"
+
 using namespace std;
-class Node
+
+Node::Node(){left=right=NULL;}
+
+Node::Node(Node *L, Node *R)
+{  left =  L;
+   right = R;
+   frec = L->frec + R->frec;  
+}
+
+Node::Node(int q,unsigned char ch)
 {
-    public:
-     	int frec;
-    	char sim;
-    	Node *left, *right;
-    	Node(){left=right=NULL;}
-   	Node(Node *L, Node *R)
-   	{  left =  L;
-   	   right = R;
-   	   frec = L->frec + R->frec;  
-   	}
-	Node(int q,char ch)
+frec=q;
+sim=ch;
+left=right=NULL;
+}
+
+void Node::DeleteNode()
+{
+if(left!=NULL)
 	{
-	a=q;
-	c=ch;
-	left=right=NULL;
+	(*left).DeleteNode();
+	delete left;
 	}
-	bool operator < (Node t) const
+if(right!=NULL)
 	{
-	frec<t.frec;
-	}
-};
+	(*right).DeleteNode();
+	delete right;
+	}	
+}
+
+bool Node::operator > (Node t)
+{
+return frec > t.frec;
+}
