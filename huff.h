@@ -14,9 +14,11 @@ class Huff
 	vector <bool> code;
 	int length;
 	Node* parent;
+	Node* temp;
    public:
 	Huff();
 	void CodeForPacker(Node *ob);
 	int BuildThree();
 	int packer(const char * ifile,const char * ofile);
+	int unpacker(const char * ifile,const char * ofile);
 };

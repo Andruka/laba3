@@ -6,12 +6,12 @@ using namespace std;
 class Node
 {
     public:
-     	int frec;
+     	uint32_t freq;
     	unsigned char sim;
     	Node *left, *right;
     	Node();
    	Node(Node *L, Node *R);
-	Node(int q,unsigned char ch);
+	Node(uint32_t q,unsigned char ch);
 	void DeleteNode();
 	bool operator > (Node t) ;
 };

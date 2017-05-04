@@ -7,12 +7,12 @@ Node::Node(){left=right=NULL;}
 Node::Node(Node *L, Node *R)
 {  left =  L;
    right = R;
-   frec = L->frec + R->frec;  
+   freq = L->freq + R->freq;  
 }
 
-Node::Node(int q,unsigned char ch)
+Node::Node(uint32_t q,unsigned char ch)
 {
-frec=q;
+freq=q;
 sim=ch;
 left=right=NULL;
 }
@@ -33,5 +33,5 @@ if(right!=NULL)
 
 bool Node::operator > (Node t)
 {
-return frec > t.frec;
+return freq > t.freq;
 }

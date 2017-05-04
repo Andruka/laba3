@@ -6,7 +6,7 @@ Huff::Huff()
 {
 for(int i=0;i<256;i++)
 {frequency[i]=0;}
-int type=0;
+length=0;
 }
 void Huff::CodeForPacker(Node *ob)
 {
@@ -114,5 +114,57 @@ while(!fin.eof())
 	}
 fin.close();
 fout.close();
+delete parent;
 return 0;		
+}
+int Huff::unpacker(const char * ifile,const char * ofile)
+{
+unsigned char c;
+ifstream fin  (ifile);
+if (!fin) 
+	{
+	return 1;
+	}
+fin.unsetf (std::ios::skipws);
+ofstream fout (ofile);
+fin >> c;
+if(c!='H')return 1;
+fin >> c;
+if(c!='U')return 1;
+fin >> c;
+if(c!='F')return 1;
+fin >> c;
+if(c!='F')return 1;
+for(int i=0;i<256;i++)
+	{
+	fin >> frequency[i];
+	frequency[i]=ntohl(frequency[i]);
+	}
+BuildThree();
+fin >> c;
+temp=parent;
+while(!fin.eof())
+	{
+	if((c & (0x80 >> length))!=0)temp=(temp->right);
+	else
+		{
+		temp=(temp->left);
+		}
+	length++;
+	if(length==8)
+		{
+		length=0;
+		fin >> c;
+		}
+	if((temp->sim)!=0)
+		{
+		fout << temp->sim;
+		temp=parent;
+		}
+	}
+fin.close();
+fout.close();
+(*parent).DeleteNode();
+delete parent;
+return 0;
 }

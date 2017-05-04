@@ -23,4 +23,9 @@ if(type==1)
 	ob.packer(ifile,ofile);
 	cout<<"Упаковка завершена"<<endl;
 	}
+if(type==2)
+	{
+	ob.unpacker(ifile,ofile);
+	cout<<"Распаковка завершена"<<endl;
+	}
 }
