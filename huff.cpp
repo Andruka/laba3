@@ -79,11 +79,11 @@ while(!fin.eof())
 	frequency[cc]++;
 	fin>>cc;
 	}
-cout<<"Сейчас дерево построится"<<endl;
+fin.close();
+fin.open(ifile);
+fin.unsetf (std::ios::skipws);
 BuildThree();
-cout<<"дерево готово"<<endl;
 CodeForPacker(parent);
-cout<<"оптимальный код готов"<<endl;
 (*parent).DeleteNode();
 fout << 'H' << 'U' << 'F' << 'F';
 for(int i=0;i<256;i++)
@@ -95,7 +95,7 @@ byte = 0;
 length = 0;
 fin >> cc;
 while(!fin.eof())
-	{
+	{cout<<cc<<endl;
 	code=optcode[cc];
 	for(int i=0;i<code.size();i++)
 		{
