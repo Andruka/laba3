@@ -25,12 +25,29 @@ void Huff::CodeForPacker(Node *ob)
   if(ob->left==NULL && ob->right==NULL)
     {
       optcode[ob->sim]=code;
+      if(code.size() > maxcode.size())
+	   {
+	   maxcode=code;
+	   }
     }
 }
+list <Node>::iterator Huff::PopMin(list <Node> & three)
+{
+  list <Node>::iterator It1=three.begin();
+  list <Node>::iterator It2=three.begin();
+      It1=three.begin();
+      It2=three.begin();
+      while(It2!=three.end())
+	{
+	  if(*It1 > *It2)It1=It2;
+	  It2++;
+	}
+   return It1;
+}
+
 int Huff::BuildThree()
 {	
   list <Node>::iterator It1;
-  list <Node>::iterator It2;
   Node *left, *right;
   list <Node> three;
   for(int i=0;i<256;i++)
@@ -40,22 +57,10 @@ int Huff::BuildThree()
     }
   while(three.size()!=1)
     {
-      It1=three.begin();
-      It2=three.begin();
-      while(It2!=three.end())
-	{
-	  if(*It1 > *It2)It1=It2;
-	  It2++;
-	}
+      It1=PopMin(three);
       left = new Node(*It1);
       three.erase(It1);
-      It1=three.begin();
-      It2=three.begin();
-      while(It2!=three.end())
-	{
-	  if(*It1 > *It2)It1=It2;
-	  It2++;
-	}
+      It1=PopMin(three);
       right = new Node(*It1);
       three.erase(It1);
       parent=new Node (left, right);
@@ -110,7 +115,17 @@ int Huff::packer(const char * ifile,const char * ofile)
 	}
       fin >> cc;
     }
-  if(length!=0)fout << byte;
+  if(length!=0)
+	{
+	int size=0;
+	while(length!=8)
+		{
+		if(maxcode[size]==true) byte|=(0x80 >> length);
+		++size;
+		++length;
+		}
+	fout << byte;
+	}
   fin.close();
   fout.close();
   delete parent;
