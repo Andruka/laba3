@@ -22,7 +22,7 @@ void Huff::CodeForPacker(Node *ob)
       CodeForPacker(ob->right);
       code.pop_back();
     }
-  if(ob->sim)
+  if(ob->left==NULL && ob->right==NULL)
     {
       optcode[ob->sim]=code;
     }
